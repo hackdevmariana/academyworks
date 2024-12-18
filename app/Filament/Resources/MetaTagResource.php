@@ -17,8 +17,9 @@ use Filament\Tables\Columns\TextColumn;
 class MetaTagResource extends Resource
 {
     protected static ?string $model = MetaTag::class;
+    protected static ?string $navigationGroup = 'Content Management';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'eva-code';
 
     public static function form(Form $form): Form
     {
