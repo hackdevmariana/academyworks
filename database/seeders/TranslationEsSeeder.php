@@ -292,7 +292,6 @@ class TranslationEsSeeder extends Seeder
                 'locale' => 'es',
                 'value' => 'papelera'
             ],
-            ...
             [
                 'key' => 'all_day',
                 'locale' => 'es',
@@ -350,7 +349,7 @@ class TranslationEsSeeder extends Seeder
             [
                 'key' => 'view_courses',
                 'locale' => 'es',
-                'value' => 'semana'
+                'value' => 'ver cursos'
             ],
 
             [
