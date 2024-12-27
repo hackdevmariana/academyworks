@@ -33,7 +33,6 @@ class ContactResource extends Resource
                 Forms\Components\Textarea::make('text')
                     ->required(),
                 Forms\Components\TextInput::make('url')
-                    ->url()
                     ->nullable(),
                 Forms\Components\TextInput::make('email')
                     ->email()
