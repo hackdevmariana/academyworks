@@ -31,8 +31,8 @@ class MenuItemResource extends Resource
                 ->label('Parent Item')
                 ->relationship('parent', 'title'),
             Forms\Components\TextInput::make('title')->required(),
-            Forms\Components\TextInput::make('slug')->disabled(),
-            Forms\Components\TextInput::make('url')->url(),
+            Forms\Components\TextInput::make('slug'),
+            Forms\Components\TextInput::make('url'),
             Forms\Components\TextInput::make('order')->numeric()->default(0),
             Forms\Components\Toggle::make('is_active')->default(true),
         ]);

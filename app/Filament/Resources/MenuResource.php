@@ -3,15 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MenuResource\Pages;
-use App\Filament\Resources\MenuResource\RelationManagers;
+use App\Filament\Resources\MenuResource\RelationManagers\MenuItemsRelationManager;
 use App\Models\Menu;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MenuResource extends Resource
 {
@@ -20,7 +18,6 @@ class MenuResource extends Resource
     protected static ?string $navigationIcon = 'eva-menu';
     protected static ?string $navigationGroup = 'Menus';
 
-
     public static function form(Form $form): Form
     {
         return $form->schema([
@@ -28,8 +25,11 @@ class MenuResource extends Resource
                 ->required()
                 ->maxLength(255),
             Forms\Components\TextInput::make('slug')
-                ->disabled()
-                ->hint('Generated automatically from the name'),
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('locale')
+                ->required()
+                ->maxLength(255),
         ]);
     }
 
@@ -38,13 +38,16 @@ class MenuResource extends Resource
         return $table->columns([
             Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
             Tables\Columns\TextColumn::make('slug')->sortable(),
-        ]);
+        ])
+            ->actions([
+                Tables\Actions\ViewAction::make(),
+            ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            MenuItemsRelationManager::class,
         ];
     }
 
