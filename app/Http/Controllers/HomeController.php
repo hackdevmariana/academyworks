@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use App\Models\MetaTag;
 use Illuminate\Support\Facades\App;
 use App\Models\Hero;
+use App\Models\Course;
 
 
 
@@ -14,7 +15,7 @@ class HomeController extends Controller
     public function index(): View
     {
         // Establecer el idioma (puedes ajustarlo según tu lógica de selección de idioma)
-        $locale = session('locale', config('app.locale')); 
+        $locale = session('locale', config('app.locale'));
         App::setLocale($locale);
 
         // Cargar metaetiquetas
@@ -29,13 +30,16 @@ class HomeController extends Controller
             ->with('items.children') // Relación con elementos del menú
             ->first();
 
-            $heroes = Hero::where('is_active', true)->where('language', session('locale', config('app.locale')))->get();
+        $heroes = Hero::where('is_active', true)->where('language', session('locale', config('app.locale')))->get();
 
+        $locale = session('locale', config('app.locale'));
+        App::setLocale($locale);
         return view('welcome', [
             'metaTags' => $metaTags,
             'logo' => $logo,
             'menu' => $menu,
             'heroes' => $heroes,
+            'courses' => Course::where('language', $locale)->get(),
         ]);
     }
 }

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": ">=8.3",
+        "codeat3/blade-game-icons": "^1.4",
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
         "faisal50x/blade-ionicons": "^1.0",
         "filament/filament": "^3.2",

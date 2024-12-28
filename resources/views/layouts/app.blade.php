@@ -10,6 +10,7 @@
         {{-- @include('partials.header') --}}
         @include('partials.navbar')
         @include('partials.hero')
+        @include('partials.carousel-courses')
         <main>
             @yield('content')
         </main>
