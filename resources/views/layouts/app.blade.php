@@ -7,9 +7,8 @@
 </head>
 <body>
     <div class="page-wraper">
-        <x-language-switcher />
-        @include('partials.header')
-        
+        {{-- @include('partials.header') --}}
+        @include('partials.navbar')
         <main>
             @yield('content')
         </main>

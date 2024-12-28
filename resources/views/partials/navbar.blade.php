@@ -8,17 +8,17 @@
             @endphp
             @if ($contact)
                 @if ($contact->url)
-                    <a href="{{ $contact->url }}">{{ $contact->text ?? $contact->email }}</a>
+                    <a href="{{ $contact->url }}" class="text-decoration-none">{{ $contact->text ?? $contact->email }}</a>
                 @elseif ($contact->email)
-                    <a href="mailto:{{ $contact->email }}">{{ $contact->text ?? $contact->email }}</a>
+                    <a href="mailto:{{ $contact->email }}" class="text-decoration-none">{{ $contact->text ?? $contact->email }}</a>
                 @endif
             @endif
         </div>
         <!-- Derecha -->
-        <div class="col-auto">
-            <x-language-switcher />
-            <a href="{{ route('login') }}">{{ ucfirst(translate('login')) }}</a> |
-            <a href="{{ route('register') }}">{{ ucfirst(translate('register')) }}</a>
+        <div class="col-auto d-flex align-items-center text-decoration-none">
+            <x-language-switcher class="me-3" />
+            <a href="{{ route('login') }}" class="me-2 ps-5 text-decoration-none">{{ ucfirst(translate('login')) }}</a>
+            <a href="{{ route('register') }}" class="ps-2 text-decoration-none">{{ ucfirst(translate('register')) }}</a>
         </div>
     </div>
 
@@ -31,18 +31,18 @@
                 $menu = \App\Models\Menu::where('slug', 'main-menu')->with('items.children')->first();
             @endphp
             @if ($logo)
-                <a href="{{ $logo->url ?? '#' }}">
-                    <img src="{{ $logo->image }}" alt="{{ $logo->name }}" style="max-height: 50px;">
+                <a href="{{ url('/') }}">
+                    <img src="{{ $logo->url ?? $logo->image }}" alt="{{ $logo->name }}" style="max-height: 50px;">
                 </a>
             @endif
             @if ($menu)
                 <nav class="ms-3">
-                    <ul class="navbar-nav">
+                    <ul class="nav">
                         @foreach ($menu->items as $item)
                             <li class="nav-item {{ $item->children->isNotEmpty() ? 'dropdown' : '' }}">
                                 <a 
                                     class="nav-link {{ $item->children->isNotEmpty() ? 'dropdown-toggle' : '' }}" 
-                                    href="{{ $item->url }}" 
+                                    href="{{ $item->url }}"
                                     {{ $item->children->isNotEmpty() ? 'data-bs-toggle=dropdown' : '' }}>
                                     {{ translate($item->title) }}
                                 </a>
@@ -68,20 +68,43 @@
             @php
                 $socialProfiles = \App\Models\SocialProfile::all();
             @endphp
-            @foreach ($socialProfiles as $profile)
-                @php
-                    $icons = [
-                        'twitter' => 'fab fa-twitter',
-                        'instagram' => 'fab fa-instagram',
-                        'linkedin' => 'fab fa-linkedin',
-                        'youtube' => 'fab fa-youtube',
-                    ];
-                    $iconClass = $icons[$profile->socialnetwork] ?? 'fas fa-globe';
-                @endphp
-                <a href="{{ $profile->url }}" target="_blank" class="me-2">
-                    <i class="{{ $iconClass }}"></i> {{ translate($profile->text) }}
-                </a>
-            @endforeach
+            <div class="d-flex">
+                @foreach ($socialProfiles as $profile)
+                    @php
+                        $icons = [
+                            'twitter' => 'bi bi-twitter-x',
+                            'x' => 'bi bi-twitter-x',
+                            'instagram' => 'bi bi-instagram',
+                            'linkedin' => 'bi bi-linkedin',
+                            'youtube' => 'bi bi-youtube',
+                        ];
+                        $colors = [
+                            'twitter' => '#131313', // Azul de Twitter
+                            'x' => '#131313',       // Azul para X (Twitter)
+                            'instagram' => '#E1306C', // Rosa de Instagram
+                            'linkedin' => '#0077B5', // Azul de LinkedIn
+                            'youtube' => '#FF0000',  // Rojo de YouTube
+                        ];
+                        $iconClass = $icons[$profile->socialnetwork] ?? 'bi bi-globe';
+                        $color = $colors[$profile->socialnetwork] ?? 'black';
+                    @endphp
+                    <a href="{{ $profile->url }}" target="_blank" class="me-2 text-decoration-none" title="{{ $profile->text }}">
+                        <i class="{{ $iconClass }}" style="font-size: 1.5rem; color: {{ $color }};"></i>
+                    </a>
+                @endforeach
+            </div>
+            
+
+            
         </div>
     </div>
 </div>
+<!-- CSS personalizado -->
+<style>
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+    }
+    .dropdown-menu {
+        margin-top: 0; /* Opcional: Ajusta el margen */
+    }
+</style>
