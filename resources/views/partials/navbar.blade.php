@@ -4,13 +4,13 @@
         <!-- Izquierda -->
         <div class="col-auto">
             @php
-                $contact = \App\Models\Contact::where('slug', 'contact-information')->first();
+                $contact = \App\Models\Contact::where('slug', 'contact')->first();
             @endphp
             @if ($contact)
                 @if ($contact->url)
-                    <a href="{{ $contact->url }}" class="text-decoration-none">{{ $contact->text ?? $contact->email }}</a>
+                    <a href="{{ $contact->url }}" class="text-decoration-none">{{ ucfirst(translate('contact')) ?? $contact->email }}</a>
                 @elseif ($contact->email)
-                    <a href="mailto:{{ $contact->email }}" class="text-decoration-none">{{ $contact->text ?? $contact->email }}</a>
+                    <a href="mailto:{{ $contact->email }}" class="text-decoration-none">{{ ucfirst(translate('contact')) ?? $contact->email }}</a>
                 @endif
             @endif
         </div>
@@ -26,43 +26,42 @@
     <div class="row justify-content-between align-items-center py-3">
         <!-- Izquierda -->
         <div class="col-auto d-flex align-items-center">
-            @php
-                $logo = \App\Models\Logo::where('slug', 'principal-logo')->first();
-                $menu = \App\Models\Menu::where('slug', 'main-menu')->with('items.children')->first();
-            @endphp
             @if ($logo)
                 <a href="{{ url('/') }}">
                     <img src="{{ $logo->url ?? $logo->image }}" alt="{{ $logo->name }}" style="max-height: 50px;">
                 </a>
             @endif
+        
             @if ($menu)
-                <nav class="ms-3">
-                    <ul class="nav">
-                        @foreach ($menu->items as $item)
-                            <li class="nav-item {{ $item->children->isNotEmpty() ? 'dropdown' : '' }}">
-                                <a 
-                                    class="nav-link {{ $item->children->isNotEmpty() ? 'dropdown-toggle' : '' }}" 
-                                    href="{{ $item->url }}"
-                                    {{ $item->children->isNotEmpty() ? 'data-bs-toggle=dropdown' : '' }}>
-                                    {{ translate($item->title) }}
-                                </a>
-                                @if ($item->children->isNotEmpty())
-                                    <ul class="dropdown-menu">
-                                        @foreach ($item->children as $child)
-                                            <li>
-                                                <a class="dropdown-item" href="{{ $child->url }}">
-                                                    {{ translate($child->title) }}
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ul>
-                </nav>
+            <nav class="ms-3">
+                <ul class="nav">
+                    @foreach ($menu->items as $item)
+                        <li class="nav-item {{ $item->children->isNotEmpty() ? 'dropdown' : '' }}">
+                            <a 
+                                class="nav-link {{ $item->children->isNotEmpty() ? 'dropdown-toggle' : '' }}" 
+                                href="{{ $item->url ?? '#' }}"
+                                {{ $item->children->isNotEmpty() ? 'data-bs-toggle=dropdown aria-expanded=false' : '' }}>
+                                {{ translate($item->title) }}
+                            </a>
+                            @if ($item->children->isNotEmpty())
+                                <ul class="dropdown-menu">
+                                    @foreach ($item->children as $child)
+                                        <li>
+                                            <a class="dropdown-item" href="{{ $child->url }}">
+                                                {{ translate($child->title) }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </nav>
+            
             @endif
         </div>
+        
         <!-- Derecha -->
         <div class="col-auto">
             @php

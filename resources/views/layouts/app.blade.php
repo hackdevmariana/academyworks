@@ -9,6 +9,7 @@
     <div class="page-wraper">
         {{-- @include('partials.header') --}}
         @include('partials.navbar')
+        @include('partials.hero')
         <main>
             @yield('content')
         </main>
