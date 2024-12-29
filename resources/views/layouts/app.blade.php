@@ -15,6 +15,7 @@
             @yield('content')
         </main>
         @include('partials.carousel-events')
+        @include('partials.carousel-quotes')
         
         @include('partials.footer')
     </div>

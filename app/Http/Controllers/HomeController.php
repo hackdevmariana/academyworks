@@ -26,7 +26,10 @@ class HomeController extends Controller
 
     $heroes = Hero::where('is_active', true)->where('language', $locale)->get();
     $events = \App\Models\Event::where('language', $locale)->get();
+    $quotes = \App\Models\Quote::where('language', $locale)->with('author')->get();
 
+
+    
     return view('welcome', [
         'metaTags' => $metaTags,
         'logo' => $logo,
@@ -34,6 +37,7 @@ class HomeController extends Controller
         'heroes' => $heroes,
         'events' => $events,
         'courses' => Course::where('language', $locale)->get(),
+        'quotes' => $quotes,
     ]);
 }
 
