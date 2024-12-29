@@ -13,34 +13,29 @@ use App\Models\Course;
 class HomeController extends Controller
 {
     public function index(): View
-    {
-        // Establecer el idioma (puedes ajustarlo según tu lógica de selección de idioma)
-        $locale = session('locale', config('app.locale'));
-        App::setLocale($locale);
+{
+    $locale = session('locale', config('app.locale'));
+    App::setLocale($locale);
 
-        // Cargar metaetiquetas
-        $metaTags = MetaTag::where('route_name', 'home')->first();
+    $metaTags = MetaTag::where('route_name', 'home')->first();
+    $logo = \App\Models\Logo::where('slug', 'principal-logo')->first();
+    $menu = \App\Models\Menu::where('slug', 'main-menu')
+        ->where('locale', $locale)
+        ->with('items.children')
+        ->first();
 
-        // Cargar logo
-        $logo = \App\Models\Logo::where('slug', 'principal-logo')->first();
+    $heroes = Hero::where('is_active', true)->where('language', $locale)->get();
+    $events = \App\Models\Event::where('language', $locale)->get();
 
-        // Cargar menú basado en el idioma
-        $menu = \App\Models\Menu::where('slug', 'main-menu')
-            ->where('locale', $locale)
-            ->with('items.children') // Relación con elementos del menú
-            ->first();
+    return view('welcome', [
+        'metaTags' => $metaTags,
+        'logo' => $logo,
+        'menu' => $menu,
+        'heroes' => $heroes,
+        'events' => $events,
+        'courses' => Course::where('language', $locale)->get(),
+    ]);
+}
 
-        $heroes = Hero::where('is_active', true)->where('language', session('locale', config('app.locale')))->get();
-
-        $locale = session('locale', config('app.locale'));
-        App::setLocale($locale);
-        return view('welcome', [
-            'metaTags' => $metaTags,
-            'logo' => $logo,
-            'menu' => $menu,
-            'heroes' => $heroes,
-            'courses' => Course::where('language', $locale)->get(),
-        ]);
-    }
 }
 

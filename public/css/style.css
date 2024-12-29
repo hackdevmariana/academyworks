@@ -117,30 +117,28 @@
 	COURSES CAROUSEL
 =========================*/
 
-/* Centrar tarjetas y elevar carrusel */
 #carouselCourses .carousel-inner {
     align-items: center;
-    margin-top: -6rem; /* Sube el carrusel */
+    margin-top: -6rem; 
 }
 
-/* Aumentar el tamaño de las tarjetas */
+
 .course-card {
-    transform: scale(1); /* Tamaño inicial */
-    z-index: 1; /* Posición inicial */
-    transition: all 0.3s ease; /* Suavizar la animación */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera inicial */
+    transform: scale(1); 
+    z-index: 1; 
+    transition: all 0.3s ease; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-/* Hacer que las tarjetas destaquen al hacer hover */
 .course-card:hover {
-    transform: scale(1.1); /* Aumentar ligeramente el tamaño */
-    z-index: 10; /* Elevar sobre el resto */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
-    margin-top: -2rem; /* Sube el carrusel */
+    transform: scale(1.1); 
+    z-index: 10; 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); 
+    margin-top: -2rem;
     margin-bottom: 2rem;
 }
 
-/* Centrar y resaltar las tarjetas en el carrusel */
+
 #carouselCourses .carousel-item {
     display: flex;
     justify-content: center;
@@ -149,7 +147,6 @@
 }
 
 
-/* Estilos del botón */
 .course-card .buttons {
     display: flex;
     gap: 1rem; /* Espacio entre los botones */
@@ -178,6 +175,71 @@
     color: #131313;
 }
 
+/*========================
+	EVENTS
+=========================*/
+
+.card-body {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-item.active .card-body {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.card-body:hover {
+    transform: scale(1.1); 
+    z-index: 10; 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); 
+}
+
+
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.card:hover .fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-body .buttons {
+    display: flex;
+    gap: 1rem; /* Espacio entre los botones */
+    justify-content: center;
+}
+
+.card-body .btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 30px; /* Botones redondeados */
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra moderna */
+}
+
+
+
+.card-body .btn-primary {
+    background: linear-gradient(90deg, #fde204, #e8d32f);
+    color: #131313;
+    border: none;
+}
+
+.card-body .btn-primary:hover {
+    background: linear-gradient(90deg, #e8d32f, #fde204);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6);
+    color: #131313;
+}
 
 /*========================
 	FOOTER
