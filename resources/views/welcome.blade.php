@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Welcome to Home Page</h1>
+    <h1>Aquí irá el buscador</h1>
 @endsection

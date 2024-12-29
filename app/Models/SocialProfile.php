@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,15 +8,11 @@ class SocialProfile extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'socialnetwork',
         'url',
         'text',
+        'owner_slug',
     ];
 
     public function getIconAttribute()
@@ -32,4 +27,9 @@ class SocialProfile extends Model
         return $icons[$this->socialnetwork] ?? 'bi bi-globe';
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(Place::class, 'owner_slug', 'slug')
+            ->orWhere($this->belongsTo(User::class, 'owner_slug', 'slug'));
+    }
 }

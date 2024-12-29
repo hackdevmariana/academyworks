@@ -3,19 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SocialProfileResource\Pages;
-use App\Filament\Resources\SocialProfileResource\RelationManagers;
 use App\Models\SocialProfile;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SocialProfileResource extends Resource
 {
     protected static ?string $model = SocialProfile::class;
+
     protected static ?string $navigationGroup = 'Content Management';
 
     protected static ?string $navigationIcon = 'ionicon-share-social-outline';
@@ -34,6 +32,10 @@ class SocialProfileResource extends Resource
                 Forms\Components\Textarea::make('text')
                     ->label('Description')
                     ->nullable(),
+                Forms\Components\TextInput::make('owner_slug')
+                    ->label('Owner Slug')
+                    ->required()
+                    ->placeholder('Enter the slug of the owner (e.g., place-slug, user-slug).'),
             ]);
     }
 
@@ -45,16 +47,22 @@ class SocialProfileResource extends Resource
                     ->label('Social Network')
                     ->sortable()
                     ->searchable(),
-                    Tables\Columns\TextColumn::make('url')
+                Tables\Columns\TextColumn::make('url')
                     ->label('URL')
                     ->url(fn($record) => $record->url)
-                    ->searchable(),                
+                    ->openUrlInNewTab(),
                 Tables\Columns\TextColumn::make('text')
                     ->label('Description')
                     ->limit(50),
+                Tables\Columns\TextColumn::make('owner_slug')
+                    ->label('Owner Slug')
+                    ->sortable()
+                    ->searchable(),
             ])
-            ->filters([]);
+            ->filters([])
+            ->defaultSort('socialnetwork');
     }
+
 
     public static function getRelations(): array
     {
