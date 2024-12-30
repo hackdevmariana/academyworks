@@ -190,7 +190,25 @@ $socialProfiles = \App\Models\SocialProfile::where('owner_slug', 'me')->get();
     <div class="footer-bottom">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 text-center"> <a target="_blank" href="https://www.templateshub.net">Templates Hub</a></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 text-center"> 
+                    
+                    @php
+                    // Obtener el idioma del usuario
+                    $locale = app()->getLocale();
+                
+                    // Obtener la traducción correspondiente al idioma
+                    $developed = \App\Models\Translation::where('key', 'developed-by')->where('locale', $locale)->value('value');
+                
+                    // Obtener los valores de Developer
+                    $developer = \App\Models\Developer::first();
+                @endphp
+                
+                @if ($developed && $developer)
+                    {{ ucfirst($developed) }} <a target="_blank" href="{{ $developer->url }}">{{ $developer->name }}</a>
+                @endif
+                
+
+                </div>
             </div>
         </div>
     </div>
