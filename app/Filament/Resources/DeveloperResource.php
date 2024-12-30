@@ -23,7 +23,13 @@ class DeveloperResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('url')
+                    ->url()
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -31,21 +37,16 @@ class DeveloperResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('url')
+                    ->label('Website')
+                    ->url(fn (Developer $record) => $record->url) 
+                    ->openUrlInNewTab(), 
             ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->filters([]);
     }
-
     public static function getRelations(): array
     {
         return [
