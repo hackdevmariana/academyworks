@@ -13,5 +13,7 @@ class MauticCode extends Model
         'name',
         'slug',
         'code',
+        'language',
     ];
+    
 }
