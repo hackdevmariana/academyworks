@@ -141,13 +141,8 @@ $socialProfiles = \App\Models\SocialProfile::where('owner_slug', 'me')->get();
                     <div class="row">
                         <div class="col-4 col-lg-4 col-md-4 col-sm-4">
                             <div class="widget footer_widget">
-                                <h5 class="footer-title">Company</h5>
-                                <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="about-1.html">About</a></li>
-                                    <li><a href="faq-1.html">FAQs</a></li>
-                                    <li><a href="contact-1.html">Contact</a></li>
-                                </ul>
+                                <x-academy-column-footer />
+
                             </div>
                         </div>
                         <div class="col-4 col-lg-4 col-md-4 col-sm-4">
