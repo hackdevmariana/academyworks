@@ -65,7 +65,7 @@
         <!-- Derecha -->
         <div class="col-auto">
             @php
-                $socialProfiles = \App\Models\SocialProfile::all();
+                $socialProfiles = \App\Models\SocialProfile::where('owner_slug', 'me')->get();
             @endphp
             <div class="d-flex">
                 @foreach ($socialProfiles as $profile)

@@ -1,25 +1,67 @@
 <footer>
     <div class="footer-top">
+
+
         <div class="pt-exebar">
             <div class="container">
-                <div class="d-flex align-items-stretch">
-                    <div class="pt-logo mr-auto">
-                        <a href="index.html"><img src="assets/images/logo-white.png" alt=""/></a>
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Logo -->
+                    <div class="pt-logo">
+                        @php
+                            $logo = \App\Models\Logo::where('slug', 'principal-logo')->first();
+                        @endphp
+                        @if($logo && $logo->url)
+                            <a href="index.html">
+                                <img src="{{ $logo->url }}" alt="{{ $logo->name }}" style="max-height: 50px;">
+                            </a>
+                        @else
+                            <a href="index.html">
+                                <img src="path/to/default/logo.png" alt="Default Logo" style="max-height: 50px;">
+                            </a>
+                        @endif
                     </div>
+        
+                    <!-- Redes Sociales -->
                     <div class="pt-social-link">
-                        <ul class="list-inline m-a0">
-                            <li><a href="#" class="btn-link"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#" class="btn-link"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#" class="btn-link"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#" class="btn-link"><i class="fa fa-google-plus"></i></a></li>
+                        <ul class="list-inline m-a0 d-flex align-items-center mb-0">
+                            @php
+                                $socialProfiles = \App\Models\SocialProfile::where('owner_slug', 'me')->get();
+                            @endphp
+                            @foreach ($socialProfiles as $profile)
+                                @php
+                                    $icons = [
+                                        'twitter' => 'bi bi-twitter-x',
+                                        'x' => 'bi bi-twitter-x',
+                                        'instagram' => 'bi bi-instagram',
+                                        'linkedin' => 'bi bi-linkedin',
+                                        'youtube' => 'bi bi-youtube',
+                                    ];
+                                    $colors = [
+                                        'twitter' => '#131313', // Azul de Twitter
+                                        'x' => '#131313',       // Azul para X (Twitter)
+                                        'instagram' => '#E1306C', // Rosa de Instagram
+                                        'linkedin' => '#0077B5', // Azul de LinkedIn
+                                        'youtube' => '#FF0000',  // Rojo de YouTube
+                                    ];
+                                    $iconClass = $icons[$profile->socialnetwork] ?? 'bi bi-globe';
+                                    $color = $colors[$profile->socialnetwork] ?? 'black';
+                                @endphp
+                                <li class="ms-2">
+                                    <a href="{{ $profile->url }}" target="_blank" class="text-decoration-none" title="{{ $profile->text }}">
+                                        <i class="{{ $iconClass }}" style="font-size: 1.5rem; color: {{ $color }};"></i>
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
-                    </div>
-                    <div class="pt-btn-join">
-                        <a href="#" class="btn ">Join Now</a>
                     </div>
                 </div>
             </div>
         </div>
+        
+        
+
+
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-12 col-sm-12 footer-col-4">
