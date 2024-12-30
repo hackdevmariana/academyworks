@@ -10,8 +10,10 @@
     "require": {
         "php": ">=8.3",
         "afatmustafa/blade-hugeicons": "^0.0.4",
+        "codeat3/blade-codicons": "^1.33",
         "codeat3/blade-game-icons": "^1.4",
         "codeat3/blade-google-material-design-icons": "^1.19",
+        "codeat3/blade-solar-icons": "^1.1",
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
         "faisal50x/blade-ionicons": "^1.0",
         "filament/filament": "^3.2",

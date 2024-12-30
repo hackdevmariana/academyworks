@@ -19,7 +19,7 @@ class MauticCodeResource extends Resource
 
     protected static ?string $navigationGroup = 'Content Management';
 
-    protected static ?string $navigationIcon = 'eva-code';
+    protected static ?string $navigationIcon = 'codicon-symbol-namespace';
 
     public static function form(Form $form): Form
     {
