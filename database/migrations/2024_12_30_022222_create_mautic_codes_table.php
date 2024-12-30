@@ -9,12 +9,14 @@ return new class extends Migration {
     {
         Schema::create('mautic_codes', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Nombre del código
-            $table->string('slug')->unique(); // Identificador único
-            $table->text('code'); // Código de Mautic
+            $table->string('name');
+            $table->string('slug');
+            $table->text('code'); 
+            $table->text('language'); 
             $table->timestamps();
         });
     }
+
 
     public function down(): void
     {

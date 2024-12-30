@@ -30,11 +30,13 @@ class MauticCodeResource extends Resource
                     ->label('Name'),
                 Forms\Components\TextInput::make('slug')
                     ->required()
-                    ->unique()
                     ->label('Slug'),
                 Forms\Components\Textarea::make('code')
                     ->required()
                     ->label('Code'),
+                    Forms\Components\Textarea::make('language')
+                    ->required()
+                    ->label('Language'),
             ]);
     }
 
@@ -46,6 +48,9 @@ class MauticCodeResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
+                    ->sortable()
+                    ->searchable(),
+                    Tables\Columns\TextColumn::make('language')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

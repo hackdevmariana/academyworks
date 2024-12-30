@@ -66,19 +66,75 @@
             <div class="row">
                 <div class="col-lg-4 col-md-12 col-sm-12 footer-col-4">
                     <div class="widget">
-                        <h5 class="footer-title">Sign Up For A Newsletter</h5>
-                        <p class="text-capitalize m-b20">Weekly Breaking news analysis and cutting edge advices on job searching.</p>
-                        <div class="subscribe-form m-b20">
-                            <form class="subscription-form" action="http://educhamp.themetrades.com/demo/assets/script/mailchamp.php" method="post">
-                                <div class="ajax-message"></div>
-                                <div class="input-group">
-                                    <input name="email" required="required"  class="form-control" placeholder="Your Email Address" type="email">
-                                    <span class="input-group-btn">
-                                        <button name="submit" value="Submit" type="submit" class="btn"><i class="fa fa-arrow-right"></i></button>
-                                    </span> 
-                                </div>
-                            </form>
-                        </div>
+
+
+                        @php
+    // Obtener el idioma del usuario
+    $userLanguage = app()->getLocale(); // Devuelve el idioma actual del usuario, por ejemplo: 'en'
+
+    // Obtener el código de Mautic para el slug "newsletter" y el idioma del usuario
+    $mauticCode = \App\Models\MauticCode::where('slug', 'newsletter')
+        ->where('language', $userLanguage)
+        ->first();
+
+    // Inicializar variables con valores predeterminados
+    $signUpNewsletter = null;
+    $newsletterDescription = null;
+    $mauticCodeContent = null;
+
+    // Si se encuentra un código de Mautic, buscar las traducciones relacionadas
+    if ($mauticCode) {
+        $signUpNewsletter = \App\Models\Translation::where('key', 'sign-up-newsletter')
+            ->where('locale', $userLanguage)
+            ->value('value'); // Obtiene directamente el campo 'value'
+
+        $newsletterDescription = \App\Models\Translation::where('key', 'newsletter-description')
+            ->where('locale', $userLanguage)
+            ->value('value'); // Obtiene directamente el campo 'value'
+
+        $mauticCodeContent = $mauticCode->code; // Obtiene el código desde el modelo MauticCode
+    }
+@endphp
+
+<!-- Renderizar el HTML -->
+@if ($mauticCode && $signUpNewsletter && $newsletterDescription)
+    <h5 class="footer-title">{{ $signUpNewsletter }}</h5>
+    <p class="custom-capitalize m-b20">{{ $newsletterDescription }}</p>
+    <div class="subscribe-form m-b20">
+        {!! $mauticCodeContent !!}
+    </div>
+@else
+@php
+$socialProfiles = \App\Models\SocialProfile::where('owner_slug', 'me')->get();
+@endphp
+@foreach ($socialProfiles as $profile)
+@php
+    $icons = [
+        'twitter' => 'bi bi-twitter-x',
+        'x' => 'bi bi-twitter-x',
+        'instagram' => 'bi bi-instagram',
+        'linkedin' => 'bi bi-linkedin',
+        'youtube' => 'bi bi-youtube',
+    ];
+    $colors = [
+        'twitter' => '#131313', 
+        'x' => '#131313',       
+        'instagram' => '#E1306C',
+        'linkedin' => '#0077B5', 
+        'youtube' => '#FF0000',  
+    ];
+    $iconClass = $icons[$profile->socialnetwork] ?? 'bi bi-globe';
+    $color = $colors[$profile->socialnetwork] ?? 'black';
+@endphp
+    <a href="{{ $profile->url }}" target="_blank" class="text-decoration-none" title="{{ $profile->text }}">
+        <i class="{{ $iconClass }} social-icon" style="font-size: 2rem; color: {{ $color }};"></i>
+    </a>
+
+@endforeach
+@endif
+
+
+                        
                     </div>
                 </div>
                 <div class="col-12 col-lg-5 col-md-7 col-sm-12">
