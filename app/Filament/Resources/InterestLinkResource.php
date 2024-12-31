@@ -16,8 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class InterestLinkResource extends Resource
 {
     protected static ?string $model = InterestLink::class;
+    protected static ?string $navigationGroup = 'Content Management';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-link';
 
     public static function form(Form $form): Form
     {
@@ -42,7 +43,7 @@ class InterestLinkResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('text')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('url')->url()->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('url')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('language')->sortable()->searchable(),
             ])
             ->filters([
