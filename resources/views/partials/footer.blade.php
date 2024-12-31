@@ -191,7 +191,34 @@ $socialProfiles = \App\Models\SocialProfile::where('owner_slug', 'me')->get();
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 text-center"> 
-                    
+                    @php
+                        $userLanguage = app()->getLocale();
+
+                        // Obtener la copia según el idioma del usuario
+                        $copyData = \App\Models\Copy::where('language', $userLanguage)->first();
+
+                        // Si no se encuentra una copia en el idioma del usuario, usar un valor por defecto
+                        $copyText = $copyData?->text ?? 'Default copy text.';
+                        $copyType = $copyData?->type ?? 'default';
+                        $copyName = $copyData?->name ?? 'Default Name';
+                    @endphp
+
+                    @if ($copyType === 'copyleft')
+                        <span class="copyleft">&copy;</span> {{ ucfirst($copyType) }} <strong>
+                        <a href="{{ $copyData?->url }}">
+                            {{ $copyName }}
+                        </a>    
+                        
+                        </strong>. {{ $copyText }}
+                    @else
+                        &copy; {{ $copyName }} <strong>{{ $copyType }}</strong>. {{ $copyText }}
+                    @endif
+
+
+
+
+<br>
+
                     @php
                     // Obtener el idioma del usuario
                     $locale = app()->getLocale();
