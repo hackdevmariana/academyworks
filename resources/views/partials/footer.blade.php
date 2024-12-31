@@ -158,13 +158,28 @@ $socialProfiles = \App\Models\SocialProfile::where('owner_slug', 'me')->get();
                         </div>
                         <div class="col-4 col-lg-4 col-md-4 col-sm-4">
                             <div class="widget footer_widget">
-                                <h5 class="footer-title">Courses</h5>
-                                <ul>
-                                    <li><a href="courses.html">Courses</a></li>
-                                    <li><a href="courses-details.html">Details</a></li>
-                                    <li><a href="membership.html">Membership</a></li>
-                                    <li><a href="profile.html">Profile</a></li>
-                                </ul>
+                                @php
+    // Obtener el idioma del usuario
+    $userLanguage = app()->getLocale();
+
+    // Obtener la traducción para "courses"
+    $coursesTranslation = \App\Models\Translation::where('key', 'courses')
+        ->where('locale', $userLanguage)
+        ->value('value') ?? 'Courses';
+
+    // Obtener los cursos en el idioma del usuario
+    $courses = \App\Models\Course::where('language', $userLanguage)->get();
+@endphp
+
+<h5 class="footer-title">{{ $coursesTranslation }}</h5>
+<ul>
+    @foreach ($courses as $course)
+        <li>
+            <a href="course/{{ $course->slug }}">{{ $course->title }}</a>
+        </li>
+    @endforeach
+</ul>
+
                             </div>
                         </div>
                     </div>
