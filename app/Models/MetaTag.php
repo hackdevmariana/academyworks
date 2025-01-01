@@ -15,6 +15,7 @@ class MetaTag extends Model
      * @var array
      */
     protected $fillable = [
+        'slug',
         'route_name',
         'title',
         'charset',

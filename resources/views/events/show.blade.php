@@ -1,4 +1,4 @@
-
+@extends('layouts.noindex')
 
 @section('content')
     @include('partials.meta', ['metaTags' => $metaTags])
