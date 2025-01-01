@@ -1,8 +1,6 @@
 @extends('layouts.noindex')
 
 @section('content')
-    @include('partials.meta', ['metaTags' => $metaTags])
-    @include('partials.navbar')
 
     <div class="container mt-5">
         <div class="row">
@@ -30,5 +28,4 @@
         </div>
     </div>
 
-    @include('partials.footer')
 @endsection

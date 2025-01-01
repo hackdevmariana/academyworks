@@ -7,7 +7,6 @@
 </head>
 <body>
     <div class="page-wraper">
-        {{-- @include('partials.header') --}}
         @include('partials.navbar')
         <main>
             @yield('content')
