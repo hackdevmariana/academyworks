@@ -26,11 +26,21 @@ class EventResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')->required(),
-                Forms\Components\TextInput::make('slug')->unique()->required(),
+                Forms\Components\TextInput::make('slug')
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->lazy()
+                    ->reactive()
+                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', \Str::slug($state))),
                 Forms\Components\TextInput::make('subtitle'),
                 Forms\Components\Textarea::make('abstract'),
                 Forms\Components\RichEditor::make('description'),
-                Forms\Components\FileUpload::make('image'),
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->directory('uploads/images')
+                    ->preserveFilenames()
+                    ->visibility('public')
+                    ->label('Event Image'),
                 Forms\Components\TextInput::make('image_url'),
                 Forms\Components\FileUpload::make('banner'),
                 Forms\Components\TextInput::make('banner_url'),

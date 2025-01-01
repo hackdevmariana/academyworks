@@ -17,6 +17,7 @@
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
         "faisal50x/blade-ionicons": "^1.0",
         "filament/filament": "^3.2",
+        "filament/forms": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
         "hasnayeen/blade-eva-icons": "^2.0",
         "laravel/framework": "^10.10",
