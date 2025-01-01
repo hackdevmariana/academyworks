@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\MetaTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+
 
 class EventController extends Controller
 {
@@ -34,9 +37,19 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show($slug)
     {
-        //
+        $locale = session('locale', config('app.locale'));
+        App::setLocale($locale);
+        $event = Event::where('slug', $slug)->firstOrFail();
+        $logo = \App\Models\Logo::where('slug', 'principal-logo')->first();
+        $metaTags = MetaTag::where('route_name', 'event/' . $slug)->first();
+        $menu = \App\Models\Menu::where('slug', 'main-menu')
+            ->where('locale', $locale)
+            ->with('items.children')
+            ->first();
+
+        return view('events.show', compact('event', 'metaTags', 'logo', 'menu'));
     }
 
     /**
