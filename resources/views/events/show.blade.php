@@ -5,9 +5,16 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12 text-center">
+                @if ($event->banner || $event->banner_url)
+                    <img 
+                        src="{{ $event->banner ? asset('storage/' . $event->banner) : $event->banner_url }}" 
+                        alt="{{ $event->title }} banner" 
+                        class="img-fluid mb-4">
+                @endif
                 <h1>{{ $event->title }}</h1>
                 <p class="subtitle">{{ $event->subtitle }}</p>
             </div>
+            
         </div>
 
         <div class="row mt-4">
