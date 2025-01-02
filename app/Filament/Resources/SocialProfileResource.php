@@ -32,10 +32,24 @@ class SocialProfileResource extends Resource
                 Forms\Components\Textarea::make('text')
                     ->label('Description')
                     ->nullable(),
-                Forms\Components\TextInput::make('owner_slug')
-                    ->label('Owner Slug')
+                Forms\Components\Select::make('owner_type')
+                    ->label('Owner Type')
                     ->required()
-                    ->placeholder('Enter the slug of the owner (e.g., place-slug, user-slug).'),
+                    ->options([
+                        'App\\Models\\Speaker' => 'Speaker',
+                        // Agrega otros modelos si los necesitas
+                    ])
+                    ->searchable(),
+                Forms\Components\Select::make('owner_id')
+                    ->label('Owner')
+                    ->required()
+                    ->options(function (callable $get) {
+                        $ownerType = $get('owner_type');
+                        return $ownerType ? $ownerType::query()->pluck('name', 'id') : [];
+                    })
+                    ->searchable()
+                    ->reactive()
+                    ->placeholder('Select an owner after choosing a type'),
             ]);
     }
 
@@ -54,15 +68,18 @@ class SocialProfileResource extends Resource
                 Tables\Columns\TextColumn::make('text')
                     ->label('Description')
                     ->limit(50),
-                Tables\Columns\TextColumn::make('owner_slug')
-                    ->label('Owner Slug')
+                Tables\Columns\TextColumn::make('owner_type')
+                    ->label('Owner Type')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('owner_id')
+                    ->label('Owner ID')
                     ->sortable()
                     ->searchable(),
             ])
             ->filters([])
             ->defaultSort('socialnetwork');
     }
-
 
     public static function getRelations(): array
     {

@@ -13,10 +13,13 @@ class SocialProfile extends Model
         'socialnetwork',
         'url',
         'text',
-        'owner_type',
-        'owner_id',
+        'owner_id',   // ID del modelo relacionado
+        'owner_type', // Tipo del modelo relacionado
     ];
 
+    /**
+     * Iconos disponibles para las redes sociales.
+     */
     public function getIconAttribute()
     {
         $icons = [
@@ -30,7 +33,7 @@ class SocialProfile extends Model
     }
 
     /**
-     * Relación polimórfica con el modelo propietario (Place o Speaker).
+     * Relación polimórfica con el modelo propietario.
      */
     public function owner()
     {
