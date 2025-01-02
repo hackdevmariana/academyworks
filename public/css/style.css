@@ -233,6 +233,30 @@
 }
 
 /*========================
+	ROUNDED BUTTON
+=========================*/
+
+.rounded-button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 30px; /* Botones redondeados */
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra moderna */
+    background: linear-gradient(90deg, #fde204, #e8d32f);
+    color: #131313;
+    border: none;
+}
+
+.rounded-button {
+    background: linear-gradient(90deg, #e8d32f, #fde204);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6);
+    color: #131313;
+}
+
+
+/*========================
 	SOCIAL ICONS
 =========================*/
 

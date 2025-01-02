@@ -116,7 +116,8 @@
                 @endif
                 
 
-
+                
+                
                 
 
                 
@@ -126,6 +127,23 @@
         <div class="container">
             <p class="abstract">{{ $event->abstract }}</p>
             <p>{!! $event->description !!}</p>
+
+            <div class="event-details">
+                <br>
+                <!-- Botón -->
+                @if($event->text_button && $event->link_button)
+                    <a href="{{ $event->link_button }}" class="rounded-button" target="_blank">
+                        {{ $event->text_button }}
+                    </a>
+                @endif
+            
+                <!-- Código -->
+                @if($event->code)
+                    <div class="event-code">
+                        {!! $event->code !!}
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 

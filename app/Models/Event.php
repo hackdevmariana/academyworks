@@ -29,5 +29,9 @@ class Event extends Model
         'end_date',
         'end_time',
         'language',
+        'text_button',
+        'link_button',
+        'code',
     ];
+    
 }

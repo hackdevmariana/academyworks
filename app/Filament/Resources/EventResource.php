@@ -52,6 +52,9 @@ class EventResource extends Resource
                 Forms\Components\TimePicker::make('start_time')->required(),
                 Forms\Components\DatePicker::make('end_date')->required(),
                 Forms\Components\TimePicker::make('end_time')->required(),
+                Forms\Components\TextInput::make('text_button'),
+                Forms\Components\TextInput::make('link_button'),
+                Forms\Components\TextInput::make('code'),
                 Forms\Components\TextInput::make('language')->required(),
             ]);
     }
