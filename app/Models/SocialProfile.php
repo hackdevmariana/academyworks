@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,8 @@ class SocialProfile extends Model
         'socialnetwork',
         'url',
         'text',
-        'owner_slug',
+        'owner_type',
+        'owner_id',
     ];
 
     public function getIconAttribute()
@@ -27,9 +29,12 @@ class SocialProfile extends Model
         return $icons[$this->socialnetwork] ?? 'bi bi-globe';
     }
 
+    /**
+     * Relación polimórfica con el modelo propietario (Place o Speaker).
+     */
     public function owner()
     {
-        return $this->belongsTo(Place::class, 'owner_slug', 'slug')
-            ->orWhere($this->belongsTo(User::class, 'owner_slug', 'slug'));
+        return $this->morphTo();
     }
 }
+

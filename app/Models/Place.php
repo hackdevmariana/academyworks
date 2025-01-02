@@ -29,8 +29,9 @@ class Place extends Model
 
     public function socialProfiles()
     {
-        return $this->hasMany(SocialProfile::class, 'owner_slug', 'slug');
+        return $this->morphMany(SocialProfile::class, 'owner');
     }
+
 
 
 }
