@@ -41,14 +41,14 @@
                                 class="nav-link {{ $item->children->isNotEmpty() ? 'dropdown-toggle' : '' }}" 
                                 href="{{ $item->url ?? '#' }}"
                                 {{ $item->children->isNotEmpty() ? 'data-bs-toggle=dropdown aria-expanded=false' : '' }}>
-                                {{ translate($item->title) }}
+                                {{ ucfirst(translate($item->title)) }}
                             </a>
                             @if ($item->children->isNotEmpty())
                                 <ul class="dropdown-menu">
                                     @foreach ($item->children as $child)
                                         <li>
                                             <a class="dropdown-item" href="{{ $child->url }}">
-                                                {{ translate($child->title) }}
+                                                {{ ucfirst(translate($child->title)) }}
                                             </a>
                                         </li>
                                     @endforeach
@@ -65,32 +65,21 @@
         <!-- Derecha -->
         <div class="col-auto">
             @php
-                $socialProfiles = \App\Models\SocialProfile::where('owner_slug', 'me')->get();
+                $socialProfiles = \App\Models\SocialProfile::forOwner('me');
+
             @endphp
-            <div class="d-flex">
-                @foreach ($socialProfiles as $profile)
-                    @php
-                        $icons = [
-                            'twitter' => 'bi bi-twitter-x',
-                            'x' => 'bi bi-twitter-x',
-                            'instagram' => 'bi bi-instagram',
-                            'linkedin' => 'bi bi-linkedin',
-                            'youtube' => 'bi bi-youtube',
-                        ];
-                        $colors = [
-                            'twitter' => '#131313', // Azul de Twitter
-                            'x' => '#131313',       // Azul para X (Twitter)
-                            'instagram' => '#E1306C', // Rosa de Instagram
-                            'linkedin' => '#0077B5', // Azul de LinkedIn
-                            'youtube' => '#FF0000',  // Rojo de YouTube
-                        ];
-                        $iconClass = $icons[$profile->socialnetwork] ?? 'bi bi-globe';
-                        $color = $colors[$profile->socialnetwork] ?? 'black';
-                    @endphp
-                    <a href="{{ $profile->url }}" target="_blank" class="me-2 text-decoration-none" title="{{ $profile->text }}">
-                        <i class="{{ $iconClass }}" style="font-size: 1.5rem; color: {{ $color }};"></i>
-                    </a>
-                @endforeach
+            <div class="d-flex social-profiles">
+                @if ($mySocialProfiles->isNotEmpty())
+
+                        @foreach ($mySocialProfiles as $profile)
+                                <a href="{{ $profile->url }}" target="_blank" title="{{ $profile->text }}" 
+                                style="color: {{ $profile->color }};">
+                                    <i class="{{ $profile->icon }}" style="font-size: 30px"></i> 
+                                </a>
+
+                        @endforeach
+                @endif
+
             </div>
             
 

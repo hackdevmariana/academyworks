@@ -16,32 +16,19 @@
 
                     <!-- Redes Sociales -->
                     <div class="pt-social-link">
-                        <ul class="list-inline m-a0 d-flex align-items-center mb-0">
-                            @php
-                                $socialProfiles = \App\Models\SocialProfile::where('owner_slug', 'me')->get();
-                                $icons = [
-                                    'twitter' => 'bi bi-twitter-x',
-                                    'x' => 'bi bi-twitter-x',
-                                    'instagram' => 'bi bi-instagram',
-                                    'linkedin' => 'bi bi-linkedin',
-                                    'youtube' => 'bi bi-youtube',
-                                ];
-                                $colors = [
-                                    'twitter' => '#131313',
-                                    'x' => '#131313',
-                                    'instagram' => '#E1306C',
-                                    'linkedin' => '#0077B5',
-                                    'youtube' => '#FF0000',
-                                ];
-                            @endphp
-                            @foreach ($socialProfiles as $profile)
-                                <li class="ms-2">
-                                    <a href="{{ $profile->url }}" target="_blank" class="text-decoration-none" title="{{ $profile->text }}">
-                                        <i class="{{ $icons[$profile->socialnetwork] ?? 'bi bi-globe' }}" style="font-size: 1.5rem; color: {{ $colors[$profile->socialnetwork] ?? 'black' }};"></i>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
+                            @if ($mySocialProfiles->isNotEmpty())
+                            <ul class="social-profiles list-inline m-a0 d-flex align-items-center mb-0">
+                                @foreach ($mySocialProfiles as $profile)
+                                    <li>
+                                        <a href="{{ $profile->url }}" target="_blank" title="{{ $profile->text }}" 
+                                           style="color: {{ $profile->color }};">
+                                            <i class="{{ $profile->icon }}"></i> 
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                        
                     </div>
                 </div>
             </div>
