@@ -37,15 +37,21 @@ class SocialProfileResource extends Resource
                     ->required()
                     ->options([
                         'App\\Models\\Speaker' => 'Speaker',
-                        // Agrega otros modelos si los necesitas
+                        'App\\Models\\Place' => 'Place',
+                        // Agrega otros modelos aquí si es necesario
                     ])
-                    ->searchable(),
+                    ->searchable()
+                    ->reactive()
+                    ->afterStateUpdated(fn (callable $set) => $set('owner_id', null)),
                 Forms\Components\Select::make('owner_id')
                     ->label('Owner')
                     ->required()
                     ->options(function (callable $get) {
                         $ownerType = $get('owner_type');
-                        return $ownerType ? $ownerType::query()->pluck('name', 'id') : [];
+                        if (!$ownerType) {
+                            return [];
+                        }
+                        return $ownerType::query()->pluck('name', 'id');
                     })
                     ->searchable()
                     ->reactive()
@@ -72,8 +78,8 @@ class SocialProfileResource extends Resource
                     ->label('Owner Type')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('owner_id')
-                    ->label('Owner ID')
+                Tables\Columns\TextColumn::make('owner.name') // Relación polimórfica
+                    ->label('Owner Name')
                     ->sortable()
                     ->searchable(),
             ])

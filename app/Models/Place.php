@@ -31,7 +31,10 @@ class Place extends Model
     {
         return $this->morphMany(SocialProfile::class, 'owner');
     }
-
+    public function getDisplayNameAttribute(): string
+    {
+        return $this->name;
+    }
 
 
 }

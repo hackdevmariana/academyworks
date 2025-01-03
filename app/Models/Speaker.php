@@ -20,8 +20,9 @@ class Speaker extends Model
      */
     public function socialProfiles()
     {
-        return $this->hasMany(SocialProfile::class, 'owner_slug', 'slug');
+        return $this->morphMany(SocialProfile::class, 'owner');
     }
+    
 
     /**
      * Relación muchos a muchos con Video.
@@ -29,5 +30,9 @@ class Speaker extends Model
     public function videos()
     {
         return $this->belongsToMany(Video::class);
+    }
+    public function getDisplayNameAttribute(): string
+    {
+        return $this->name;
     }
 }
