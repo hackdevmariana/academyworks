@@ -9,10 +9,10 @@ class Quote extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['quote', 'slug', 'language', 'quote_author_id'];
+    protected $fillable = ['quote', 'slug', 'language', 'author_id'];
 
     public function author()
     {
-        return $this->belongsTo(QuoteAuthor::class, 'quote_author_id');
+        return $this->belongsTo(Author::class, 'author_id');
     }
 }

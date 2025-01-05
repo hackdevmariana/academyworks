@@ -23,9 +23,9 @@ class Author extends Model
 
     public function quotes()
     {
-        return $this->hasMany(Quote::class); // Relación con las citas
+        return $this->hasMany(Quote::class); 
     }
-
+    
     public function books()
     {
         return $this->hasMany(Book::class); // Relación con los libros

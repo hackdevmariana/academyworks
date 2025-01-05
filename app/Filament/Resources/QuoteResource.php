@@ -33,10 +33,14 @@ class QuoteResource extends Resource
                 Forms\Components\TextInput::make('language')
                     ->required()
                     ->maxLength(2),
-                Forms\Components\Select::make('quote_author_id')
+                Forms\Components\Select::make('author_id')
                     ->label('Author')
-                    ->options(QuoteAuthor::all()->pluck('name', 'id'))
+                    ->options(fn() => \App\Models\Author::all()->mapWithKeys(fn($author) => [
+                        $author->id => "{$author->name} {$author->surname}",
+                    ]))
+                    ->searchable()
                     ->required(),
+
             ]);
     }
 
