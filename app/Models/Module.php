@@ -24,6 +24,6 @@ class Module extends Model
 
     public function classes()
     {
-        return $this->hasMany(ClassModel::class)->orderBy('order');
+        return $this->hasMany(Lesson::class)->orderBy('order');
     }
 }
