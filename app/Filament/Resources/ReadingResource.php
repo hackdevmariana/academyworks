@@ -18,7 +18,7 @@ class ReadingResource extends Resource
     protected static ?string $model = Reading::class;
     protected static ?string $navigationGroup = 'Academic content';
 
-    protected static ?string $navigationIcon = 'phosphor-read-cv-logo-bold';
+    protected static ?string $navigationIcon = 'phosphor-read-cv-logo-fill';
 
     public static function form(Form $form): Form
     {

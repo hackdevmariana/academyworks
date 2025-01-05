@@ -21,4 +21,10 @@ class ReadingPart extends Model
     {
         return $this->belongsTo(Reading::class);
     }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+
 }

@@ -17,6 +17,7 @@ class ReadingPartResource extends Resource
 {
     protected static ?string $model = ReadingPart::class;
 
+    protected static ?string $navigationGroup = 'Academic content';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

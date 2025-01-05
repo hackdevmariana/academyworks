@@ -26,4 +26,10 @@ class Reading extends Model
     {
         return $this->hasMany(ReadingPart::class);
     }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+
 }

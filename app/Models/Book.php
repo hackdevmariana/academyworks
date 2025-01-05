@@ -41,4 +41,10 @@ class Book extends Model
     {
         return $this->hasMany(Quote::class);
     }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+
 }

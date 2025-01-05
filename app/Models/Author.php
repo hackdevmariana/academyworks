@@ -30,5 +30,11 @@ class Author extends Model
     {
         return $this->hasMany(Book::class); // Relación con los libros
     }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+
 }
 
