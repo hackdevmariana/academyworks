@@ -10,6 +10,7 @@
     "require": {
         "php": ">=8.3",
         "afatmustafa/blade-hugeicons": "^0.0.4",
+        "amendozaaguiar/laraveles-spanish-for-jetstream": "^1.7",
         "andreiio/blade-iconoir": "^4.6",
         "codeat3/blade-codicons": "^1.33",
         "codeat3/blade-game-icons": "^1.4",
