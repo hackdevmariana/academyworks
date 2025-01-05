@@ -17,8 +17,19 @@
         <!-- Derecha -->
         <div class="col-auto d-flex align-items-center text-decoration-none">
             <x-language-switcher class="me-3" />
+            
+            @guest
             <a href="{{ route('login') }}" class="me-2 ps-5 text-decoration-none">{{ ucfirst(translate('login')) }}</a>
             <a href="{{ route('register') }}" class="ps-2 text-decoration-none">{{ ucfirst(translate('register')) }}</a>
+            @endguest
+            
+            @auth
+            <span class="ms-3">{{ ucfirst(translate('hello')) }}, {{ Auth::user()->name }}</span>
+            <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-link text-decoration-none">{{ ucfirst(translate('logout')) }}</button>
+            </form>
+            @endauth
         </div>
     </div>
 
