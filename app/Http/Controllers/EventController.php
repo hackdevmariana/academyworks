@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\App;
 use App\Models\Place;
 use App\Models\Logo;
 use App\Models\Menu;
+use App\Models\Quote;
+
 
 
 class EventController extends Controller
@@ -62,9 +64,13 @@ class EventController extends Controller
             ? Place::where('slug', $event->place)->first()
             : null;
 
+        // Obtener citas en orden aleatorio
+        $quotes = Quote::inRandomOrder()->with('author')->take(10)->get();
+
         // Pasar los datos a la vista
-        return view('events.show', compact('event', 'metaTags', 'logo', 'menu', 'place', 'locale'));
+        return view('events.show', compact('event', 'metaTags', 'logo', 'menu', 'place', 'locale', 'quotes'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
