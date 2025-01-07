@@ -44,14 +44,11 @@ class EventController extends Controller
      */
     public function show($slug)
     {
-        // Establecer el idioma
         $locale = session('locale', config('app.locale'));
         App::setLocale($locale);
 
-        // Obtener el evento por slug
         $event = Event::where('slug', $slug)->firstOrFail();
 
-        // Obtener información adicional
         $logo = Logo::where('slug', 'principal-logo')->first();
         $metaTags = MetaTag::where('route_name', 'event/' . $slug)->first();
         $menu = Menu::where('slug', 'main-menu')
@@ -59,15 +56,12 @@ class EventController extends Controller
             ->with('items.children')
             ->first();
 
-        // Obtener el lugar del evento si está definido
         $place = $event->place
             ? Place::where('slug', $event->place)->first()
             : null;
 
-        // Obtener citas en orden aleatorio
-        $quotes = Quote::inRandomOrder()->with('author')->take(10)->get();
+        $quotes = Quote::where('language', $locale)->inRandomOrder()->take(10)->get();
 
-        // Pasar los datos a la vista
         return view('events.show', compact('event', 'metaTags', 'logo', 'menu', 'place', 'locale', 'quotes'));
     }
 

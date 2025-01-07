@@ -7,39 +7,35 @@ use App\Models\MetaTag;
 use Illuminate\Support\Facades\App;
 use App\Models\Hero;
 use App\Models\Course;
-
-
+use App\Models\Quote;
 
 class HomeController extends Controller
 {
     public function index(): View
-{
-    $locale = session('locale', config('app.locale'));
-    App::setLocale($locale);
+    {
+        $locale = session('locale', config('app.locale'));
+        App::setLocale($locale);
 
-    $metaTags = MetaTag::where('route_name', 'home')->first();
-    $logo = \App\Models\Logo::where('slug', 'principal-logo')->first();
-    $menu = \App\Models\Menu::where('slug', 'main-menu')
-        ->where('locale', $locale)
-        ->with('items.children')
-        ->first();
+        $metaTags = MetaTag::where('route_name', 'home')->first();
+        $logo = \App\Models\Logo::where('slug', 'principal-logo')->first();
+        $menu = \App\Models\Menu::where('slug', 'main-menu')
+            ->where('locale', $locale)
+            ->with('items.children')
+            ->first();
 
-    $heroes = Hero::where('is_active', true)->where('language', $locale)->get();
-    $events = \App\Models\Event::where('language', $locale)->get();
-    $quotes = \App\Models\Quote::where('language', $locale)->with('author')->get();
+        $heroes = Hero::where('is_active', true)->where('language', $locale)->get();
+        $events = \App\Models\Event::where('language', $locale)->get();
+        $quotes = Quote::where('language', $locale)->inRandomOrder()->take(10)->get();
 
-
-    
-    return view('welcome', [
-        'metaTags' => $metaTags,
-        'logo' => $logo,
-        'menu' => $menu,
-        'heroes' => $heroes,
-        'events' => $events,
-        'courses' => Course::where('language', $locale)->get(),
-        'quotes' => $quotes,
-    ]);
-}
-
+        return view('welcome', [
+            'metaTags' => $metaTags,
+            'logo' => $logo,
+            'menu' => $menu,
+            'heroes' => $heroes,
+            'events' => $events,
+            'courses' => Course::where('language', $locale)->get(),
+            'quotes' => $quotes,
+        ]);
+    }
 }
 
