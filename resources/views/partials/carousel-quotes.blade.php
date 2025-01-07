@@ -9,38 +9,42 @@
         </div>
 
         @if($quotes->isNotEmpty())
-            <div id="quotesCarousel" class="d-flex position-relative">
-                @foreach($quotes as $index => $quote)
-                    <div 
-                        class="quote-card bg-light shadow-sm rounded d-flex align-items-center p-3 mb-3 mx-2 flex-shrink-0" 
-                        style="width: 400px;" 
-                        data-index="{{ $index }}"
-                    >
-                        @php
-                            $image = $quote->author->image 
-                                ? asset('storage/' . $quote->author->image) 
-                                : ($quote->author->url ?? 'path/to/default/image.jpg'); 
-                        @endphp
-                        <img 
-                            src="{{ $image }}" 
-                            alt="{{ $quote->author->name }}" 
-                            class="rounded-circle me-3 flex-shrink-0" 
-                            style="width: 80px; height: 80px; object-fit: cover;"
+            <div id="quotesCarouselWrapper" class="overflow-hidden">
+                <div id="quotesCarousel" class="d-flex">
+                    @foreach($quotes as $index => $quote)
+                        <div 
+                            class="quote-card bg-light shadow-sm rounded p-3 mx-2 flex-shrink-0" 
+                            style="flex: 0 0 calc(33.333% - 1rem);" 
+                            data-index="{{ $index }}"
                         >
-                        <div>
-                            <p class="fs-5 mb-1 text-dark">"{{ $quote->quote }}"</p>
-                            <small class="text-muted">
-                                — 
-                                <a 
-                                    href="/author/{{ $quote->author->slug }}" 
-                                    class="text-decoration-none text-dark fw-semibold"
+                            @php
+                                $image = $quote->author->image 
+                                    ? asset('storage/' . $quote->author->image) 
+                                    : ($quote->author->url ?? 'path/to/default/image.jpg'); 
+                            @endphp
+                            <div class="d-flex align-items-start">
+                                <img 
+                                    src="{{ $image }}" 
+                                    alt="{{ $quote->author->name }}" 
+                                    class="rounded-circle me-3 flex-shrink-0" 
+                                    style="width: 80px; height: 80px; object-fit: cover;"
                                 >
-                                    {{ $quote->author->name }} {{ $quote->author->surname }}
-                                </a>
-                            </small>
+                                <div>
+                                    <p class="fs-5 mb-1 text-dark">"{{ $quote->quote }}"</p>
+                                    <small class="text-muted">
+                                        — 
+                                        <a 
+                                            href="/author/{{ $quote->author->slug }}" 
+                                            class="text-decoration-none text-dark fw-semibold"
+                                        >
+                                            {{ $quote->author->name }} {{ $quote->author->surname }}
+                                        </a>
+                                    </small>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         @else
             <p class="text-dark">No quotes available at the moment.</p>
@@ -54,40 +58,44 @@
         const cards = document.querySelectorAll('.quote-card');
         const prevBtn = document.getElementById('prevQuote');
         const nextBtn = document.getElementById('nextQuote');
-        
+
+        const visibleCards = 3;
+        const totalCards = cards.length;
         let currentIndex = 0;
 
         function updateCarousel() {
-            const offset = -currentIndex * (cards[0].offsetWidth + 16); // Ajustar al ancho real de las tarjetas
+            const cardWidth = cards[0].offsetWidth + 16; // Ancho de tarjeta más margen
+            const offset = -currentIndex * cardWidth;
+
             carousel.style.transform = `translateX(${offset}px)`;
         }
 
         prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
-            }
+            currentIndex = (currentIndex - 1 + totalCards) % totalCards; // Movimiento circular hacia atrás
+            updateCarousel();
         });
 
         nextBtn.addEventListener('click', () => {
-            if (currentIndex < cards.length - 1) {
-                currentIndex++;
-                updateCarousel();
-            }
+            currentIndex = (currentIndex + 1) % totalCards; // Movimiento circular hacia adelante
+            updateCarousel();
         });
+
+        updateCarousel();
     });
 </script>
 
 <style>
-    #quotesCarousel {
+    #quotesCarouselWrapper {
+        max-width: 100%;
         overflow: hidden;
+    }
+
+    #quotesCarousel {
+        display: flex;
         transition: transform 0.3s ease-in-out;
-        white-space: nowrap;
     }
 
     .quote-card {
-        display: flex;
-        align-items: center;
         background-color: #f9f9f9;
         border: 1px solid #ddd;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
