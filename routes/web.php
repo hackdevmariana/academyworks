@@ -7,6 +7,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ReadingController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CourseController;
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -30,3 +33,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/student/edit', [StudentController::class, 'edit'])->name('student.edit');
     Route::post('/student/update', [StudentController::class, 'update'])->name('student.update');
 });
+
+// Listado de cursos en español
+Route::get('/cursos', [CourseController::class, 'indexSpanish'])->name('courses.spanish');
+
+// Listado de cursos en inglés
+Route::get('/courses', [CourseController::class, 'indexEnglish'])->name('courses.english');
+
+// Detalle del curso (español o inglés según la ruta)
+Route::get('/curso/{slug}', [CourseController::class, 'show'])->name('course.show.spanish');
+Route::get('/course/{slug}', [CourseController::class, 'show'])->name('course.show.english');
+
