@@ -23,17 +23,11 @@ class Course extends Model
         'language',
     ];
 
-    // App\Models\Course.php
     public function modules()
     {
-        return $this->hasMany(Module::class)->orderBy('order');
+        return $this->hasMany(Module::class);
     }
-
-    // App\Models\Module.php
-    public function lessons()
-    {
-        return $this->hasMany(Lesson::class)->orderBy('order');
-    }
+    
 
 }
 

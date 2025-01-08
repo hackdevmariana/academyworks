@@ -8,6 +8,8 @@ use App\Http\Controllers\ReadingController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\LessonController;
 
 
 
@@ -44,3 +46,7 @@ Route::get('/courses', [CourseController::class, 'indexEnglish'])->name('courses
 Route::get('/curso/{slug}', [CourseController::class, 'show'])->name('course.show.spanish');
 Route::get('/course/{slug}', [CourseController::class, 'show'])->name('course.show.english');
 
+Route::get('course/{slug}/modules', [ModuleController::class, 'show'])->name('module.index');
+Route::get('course/{slug}/module/{module:slug}', [ModuleController::class, 'show'])->name('module.show');
+Route::get('course/{slug}/module/{module:slug}/lessons', [LessonController::class, 'show'])->name('lesson.index');
+Route::get('course/{slug}/module/{module:slug}/lesson/{lesson:slug}', [LessonController::class, 'show'])->name('lesson.show');

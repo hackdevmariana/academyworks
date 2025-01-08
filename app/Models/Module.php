@@ -22,11 +22,6 @@ class Module extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function classes()
-    {
-        return $this->hasMany(Lesson::class)->orderBy('order');
-    }
-
     public function lessons()
     {
         return $this->hasMany(Lesson::class)->orderBy('order');
