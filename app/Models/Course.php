@@ -21,5 +21,19 @@ class Course extends Model
         'duration',
         'level',
         'language',
-        ];
+    ];
+
+    // App\Models\Course.php
+    public function modules()
+    {
+        return $this->hasMany(Module::class)->orderBy('order');
+    }
+
+    // App\Models\Module.php
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class)->orderBy('order');
+    }
+
 }
+
