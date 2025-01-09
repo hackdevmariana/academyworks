@@ -20,6 +20,7 @@ Route::get('/event/{slug}', [EventController::class, 'show'])->name('event.show'
 Route::get('/readings/{slug}', [ReadingController::class, 'show'])->name('readings.show');
 Route::get('/speakers', [SpeakerController::class, 'index'])->name('speakers.index');
 Route::get('/speakers/{id}', [SpeakerController::class, 'show'])->name('speakers.show');
+use App\Http\Controllers\MessageController;
 
 Route::middleware([
     'auth:sanctum',
@@ -50,3 +51,6 @@ Route::get('course/{slug}/modules', [ModuleController::class, 'show'])->name('mo
 Route::get('course/{slug}/module/{module:slug}', [ModuleController::class, 'show'])->name('module.show');
 Route::get('course/{slug}/module/{module:slug}/lessons', [LessonController::class, 'show'])->name('lesson.index');
 Route::get('course/{slug}/module/{module:slug}/lesson/{lesson:slug}', [LessonController::class, 'show'])->name('lesson.show');
+
+Route::get('/contact', [MessageController::class, 'create'])->name('messages.create');
+Route::post('/contact', [MessageController::class, 'store'])->name('messages.store');
