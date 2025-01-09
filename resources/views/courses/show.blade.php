@@ -40,7 +40,10 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="heading-{{ $module->id }}">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $module->id }}" aria-expanded="false" aria-controls="collapse-{{ $module->id }}">
-                            {{ $module->order }}. <a href="{{ url('course/module/' . $module->slug) }}">{{ $module->title }}</a>
+                            {{ $module->order }}. 
+                            <a href="{{ route('module.show', ['slug' => $course->slug, 'module' => $module->slug]) }}">
+                                {{ $module->title }}
+                            </a>
                         </button>
                     </h2>
                     <div id="collapse-{{ $module->id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ $module->id }}" data-bs-parent="#modulesAccordion">
@@ -50,7 +53,8 @@
                             <ul>
                                 @foreach ($module->lessons as $lesson)
                                     <li>
-                                        {{ $lesson->order }}. <a href="{{ url('course/module/' . $module->slug . '/lesson/' . $lesson->slug) }}">
+                                        {{ $lesson->order }}. 
+                                        <a href="{{ route('lesson.show', ['slug' => $course->slug, 'module' => $module->slug, 'lesson' => $lesson->slug]) }}">
                                             <strong>{{ $lesson->title }}</strong>
                                         </a>
                                         @if ($lesson->video_url)

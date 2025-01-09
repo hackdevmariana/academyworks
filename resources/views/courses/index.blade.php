@@ -23,7 +23,7 @@
                         <p>{{ $course->abstract }}</p>
                         <a href="{{ $language === 'es' ? url('/curso/' . $course->slug) : url('/course/' . $course->slug) }}" 
                            class="btn btn-primary">
-                            {{ $language === 'es' ? 'Ver Curso' : 'View Course' }}
+                            {{ $language === 'es' ? 'Ver curso' : 'View course' }}
                         </a>
                         </div>
                     </div>

@@ -27,4 +27,13 @@ class Lesson extends Model
     {
         return $this->belongsToMany(Speaker::class, 'class_speaker');
     }
+    public function getEmbedUrlAttribute()
+    {
+        if (strpos($this->video_url, 'youtube.com/watch') !== false) {
+            return str_replace('watch?v=', 'embed/', $this->video_url);
+        }
+
+        return $this->video_url; // Devuelve la URL original si ya está en formato embebido
+    }
+
 }
