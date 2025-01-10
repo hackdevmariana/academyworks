@@ -1,26 +1,20 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Speaker;
+use Illuminate\Http\Request;
 
 class SpeakerController extends Controller
 {
-    /**
-     * Mostrar el listado de Speakers.
-     */
     public function index()
     {
-        $speakers = Speaker::with('socialProfiles', 'videos')->get();
+        $speakers = Speaker::all();
         return view('speakers.index', compact('speakers'));
     }
 
-    /**
-     * Mostrar los detalles de un Speaker.
-     */
-    public function show($id)
+    public function show($slug)
     {
-        $speaker = Speaker::with('socialProfiles', 'videos')->findOrFail($id);
+        $speaker = Speaker::where('slug', $slug)->firstOrFail();
         return view('speakers.show', compact('speaker'));
     }
 }

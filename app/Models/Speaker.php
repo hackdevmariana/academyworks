@@ -42,6 +42,10 @@ class Speaker extends Model
     {
         return $this->morphMany(SocialProfile::class, 'owner');
     }
-    
+    public function videos()
+    {
+        return $this->belongsToMany(Video::class, 'speaker_video', 'speaker_id', 'video_id');
+    }
+
 
 }

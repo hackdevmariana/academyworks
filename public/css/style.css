@@ -117,7 +117,7 @@
 #carouselCourses .carousel-inner {
     align-items: center;
     margin-top: -6rem;
-}
+} 
 
 .course-card {
     transform: scale(1);
@@ -260,10 +260,16 @@
     border: none;
 }
 
-.rounded-button {
+.rounded-button:hover {
     background: linear-gradient(90deg, #e8d32f, #fde204);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6);
     color: #131313;
+}
+
+.rounded-button-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;    /* Opcional: centra verticalmente */
 }
 
 
@@ -341,8 +347,27 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    border: 1px solid #dee2e6; /* Borde para asegurar contraste */
+    border: 1px solid #888; 
+    border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-card-body {
+    flex-grow: 1; /* Asegura que el contenido crezca para llenar el espacio disponible */
+    background-color: #f8f9fa; 
+    color: #131313; 
+    padding: 1rem;
+}
+
+
+.custom-card-title {
+    background-color: #f8f9fa; 
+    color: #131313; 
+}
+
+.custom-card-text{
+    background-color: #f8f9fa; 
+    color: #131313; 
 }
 
 .custom-image-wrapper {
