@@ -9,13 +9,13 @@ class Message extends Model
     use HasFactory;
 
     protected $fillable = [
-        'subject', 'name', 'email', 'user_id', 'message'
+        'subject',
+        'name',
+        'email',
+        'message',
+        'user_id', // Este campo debe existir si hay una relación con User
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
     public function user()
     {
         return $this->belongsTo(User::class);

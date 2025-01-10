@@ -3,15 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MessageResource\Pages;
-use App\Filament\Resources\MessageResource\RelationManagers;
 use App\Models\Message;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MessageResource extends Resource
 {
@@ -19,27 +14,49 @@ class MessageResource extends Resource
 
     protected static ?string $navigationIcon = 'eva-email-outline';
 
-    public static function form(Form $form): Form
+    public static function form(Forms\Form $form): Forms\Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('subject')
                     ->required(),
-                Forms\Components\TextInput::make('name'),
+                Forms\Components\TextInput::make('name')
+                    ->label('Sender Name')
+                    ->disabled(),
                 Forms\Components\TextInput::make('email')
-                    ->email(),
+                    ->label('Sender Email')
+                    ->email()
+                    ->disabled(),
                 Forms\Components\Textarea::make('message')
                     ->required(),
+                Forms\Components\TextInput::make('user.name')
+                    ->label('User Name')
+                    ->disabled()
+                    ->visible(fn($record) => $record->user_id !== null),
+                Forms\Components\TextInput::make('user.email')
+                    ->label('User Email')
+                    ->disabled()
+                    ->visible(fn($record) => $record->user_id !== null),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public static function table(Tables\Table $table): Tables\Table
     {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('subject')->searchable(),
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('email')->searchable(),
+                Tables\Columns\TextColumn::make('name')->searchable()
+                    ->label('Sender Name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('email')->searchable()
+                    ->label('Sender Email')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')->label('User Name')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('user.email')->label('User Email')
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('message')->limit(50),
                 Tables\Columns\TextColumn::make('created_at')->dateTime(),
             ])
