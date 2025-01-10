@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.noindex')
 
 @section('content')
 <div class="container my-5">
-    <h1 class="mb-4 text-primary">Speakers</h1>
+    <h1 class="mb-4 text-primary">{{ ucfirst(translate('speakers')) }}</h1>
     <div class="row">
         @foreach ($speakers as $speaker)
         <div class="col-md-4 mb-4">
