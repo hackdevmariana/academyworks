@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Str;
+
 class Speaker extends Model
 {
     use HasFactory;
@@ -13,8 +15,26 @@ class Speaker extends Model
         'name',
         'surname',
         'biography',
+        'slug',
+        'photo',
+        'photo_url',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            if (empty($model->slug)) {
+                $model->slug = Str::slug("{$model->name} {$model->surname}");
+            }
+        });
+    }
+
+    public function getDisplayNameAttribute(): string
+    {
+        return "{$this->name} {$this->surname}";
+    }
     /**
      * Relación uno a muchos con SocialProfile.
      */
@@ -24,15 +44,4 @@ class Speaker extends Model
     }
     
 
-    /**
-     * Relación muchos a muchos con Video.
-     */
-    public function videos()
-    {
-        return $this->belongsToMany(Video::class);
-    }
-    public function getDisplayNameAttribute(): string
-    {
-        return $this->name;
-    }
 }
