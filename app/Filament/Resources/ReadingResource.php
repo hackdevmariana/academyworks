@@ -28,9 +28,12 @@ class ReadingResource extends Resource
             Forms\Components\TextInput::make('slug')->unique(),
             Forms\Components\Textarea::make('description'),
             Forms\Components\Select::make('author_id')
-                ->relationship('author', 'name')->required(),
+                ->relationship('author', 'id')
+                ->getOptionLabelFromRecordUsing(fn($record) => $record->full_name)
+                ->required(),
         ]);
     }
+
 
     public static function table(Table $table): Table
     {

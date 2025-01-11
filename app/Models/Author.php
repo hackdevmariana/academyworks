@@ -28,7 +28,7 @@ class Author extends Model
     
     public function books()
     {
-        return $this->hasMany(Book::class); // Relación con los libros
+        return $this->hasMany(Book::class); 
     }
 
     public function reviews()
@@ -39,6 +39,9 @@ class Author extends Model
     {
         return $this->hasMany(Reading::class);
     }
-    
+    public function getFullNameAttribute()
+    {
+        return "{$this->name} {$this->surname}";
+    }
 }
 
