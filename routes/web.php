@@ -11,7 +11,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\LessonController;
 
-
+use App\Http\Controllers\AuthorController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -54,3 +54,12 @@ Route::get('course/{slug}/module/{module:slug}/lesson/{lesson:slug}', [LessonCon
 
 Route::get('/contact', [MessageController::class, 'create'])->name('messages.create');
 Route::post('/contact', [MessageController::class, 'store'])->name('messages.store');
+
+
+Route::get('/readings', [ReadingController::class, 'index'])->name('readings.index');
+Route::get('/readings/{slug}', [ReadingController::class, 'show'])->name('readings.show');
+
+
+
+
+Route::get('/authors/{slug}', [AuthorController::class, 'show'])->name('authors.show');
