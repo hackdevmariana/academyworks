@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LanguageController; 
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ReadingController;
@@ -17,7 +17,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('lang/{locale}', [LanguageController::class, 'changeLanguage'])->name('changeLanguage');
 Route::get('/event/{slug}', [EventController::class, 'show'])->name('event.show');
-Route::get('/readings/{slug}', [ReadingController::class, 'show'])->name('readings.show');
 Route::get('/speakers', [SpeakerController::class, 'index'])->name('speakers.index');
 Route::get('/speakers/{id}', [SpeakerController::class, 'show'])->name('speakers.show');
 use App\Http\Controllers\MessageController;
@@ -58,6 +57,7 @@ Route::post('/contact', [MessageController::class, 'store'])->name('messages.sto
 
 Route::get('/readings', [ReadingController::class, 'index'])->name('readings.index');
 Route::get('/readings/{slug}', [ReadingController::class, 'show'])->name('readings.show');
+Route::get('/readings/{slug}/part/{partSlug}', [ReadingController::class, 'showPart'])->name('readings.part.show');
 
 
 

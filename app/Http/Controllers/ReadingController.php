@@ -22,4 +22,15 @@ class ReadingController extends Controller
 
         return view('readings.show', compact('reading'));
     }
+    public function showPart($slug, $partSlug)
+    {
+        // Encuentra la lectura por su slug
+        $reading = Reading::where('slug', $slug)->firstOrFail();
+
+        // Encuentra la parte de lectura por su slug y asociada a esta lectura
+        $part = $reading->parts()->where('slug', $partSlug)->firstOrFail();
+
+        return view('readings.part.show', compact('reading', 'part'));
+    }
+
 }
