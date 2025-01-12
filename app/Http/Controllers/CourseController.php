@@ -21,6 +21,15 @@ class CourseController extends Controller
         return view('courses.index', ['courses' => $courses, 'language' => 'en']);
     }
 
+    public function index()
+    {
+        // Obtén todos los cursos
+        $courses = \App\Models\Course::all();
+
+        // Devuelve la vista con los cursos
+        return view('courses.index', compact('courses'));
+    }
+
     // Mostrar un curso específico
     public function show($slug)
     {

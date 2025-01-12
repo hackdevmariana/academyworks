@@ -1,26 +1,40 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\ReadingController;
-use App\Http\Controllers\SpeakerController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\ModuleController;
-use App\Http\Controllers\LessonController;
+use App\Http\Controllers\{
+    LanguageController,
+    HomeController,
+    EventController,
+    SpeakerController,
+    StudentController,
+    CourseController,
+    ModuleController,
+    LessonController,
+    MessageController,
+    ReadingController,
+    AuthorController
+};
 
-use App\Http\Controllers\AuthorController;
-
+// Página de inicio
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Cambio de idioma
 Route::get('lang/{locale}', [LanguageController::class, 'changeLanguage'])->name('changeLanguage');
-Route::get('/event/{slug}', [EventController::class, 'show'])->name('event.show');
-Route::get('/speakers', [SpeakerController::class, 'index'])->name('speakers.index');
-Route::get('/speakers/{id}', [SpeakerController::class, 'show'])->name('speakers.show');
-use App\Http\Controllers\MessageController;
 
+// Eventos
+Route::get('/event/{slug}', [EventController::class, 'show'])->name('event.show');
+
+// Speakers
+Route::prefix('speakers')->name('speakers.')->group(function () {
+    Route::get('/', [SpeakerController::class, 'index'])->name('index');
+    Route::get('/{id}', [SpeakerController::class, 'show'])->name('show');
+});
+
+// Contacto
+Route::get('/contact', [MessageController::class, 'create'])->name('messages.create');
+Route::post('/contact', [MessageController::class, 'store'])->name('messages.store');
+
+// Autenticación y dashboard
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -31,35 +45,36 @@ Route::middleware([
     })->name('dashboard');
 });
 
+// Rutas autenticadas
 Route::middleware(['auth'])->group(function () {
-    Route::get('/student/edit', [StudentController::class, 'edit'])->name('student.edit');
-    Route::post('/student/update', [StudentController::class, 'update'])->name('student.update');
+    // Estudiantes
+    Route::prefix('student')->name('student.')->group(function () {
+        Route::get('/edit', [StudentController::class, 'edit'])->name('edit');
+        Route::post('/update', [StudentController::class, 'update'])->name('update');
+    });
 });
 
-// Listado de cursos en español
-Route::get('/cursos', [CourseController::class, 'indexSpanish'])->name('courses.spanish');
-
-// Listado de cursos en inglés
-Route::get('/courses', [CourseController::class, 'indexEnglish'])->name('courses.english');
-
-// Detalle del curso (español o inglés según la ruta)
-Route::get('/curso/{slug}', [CourseController::class, 'show'])->name('course.show.spanish');
-Route::get('/course/{slug}', [CourseController::class, 'show'])->name('course.show.english');
-
-Route::get('course/{slug}/modules', [ModuleController::class, 'show'])->name('module.index');
-Route::get('course/{slug}/module/{module:slug}', [ModuleController::class, 'show'])->name('module.show');
-Route::get('course/{slug}/module/{module:slug}/lessons', [LessonController::class, 'show'])->name('lesson.index');
-Route::get('course/{slug}/module/{module:slug}/lesson/{lesson:slug}', [LessonController::class, 'show'])->name('lesson.show');
-
-Route::get('/contact', [MessageController::class, 'create'])->name('messages.create');
-Route::post('/contact', [MessageController::class, 'store'])->name('messages.store');
+// Cursos
+Route::prefix('courses')->name('courses.')->group(function () {
+    Route::get('/', [CourseController::class, 'index'])->name('index'); // Nueva ruta
+    Route::get('/spanish', [CourseController::class, 'indexSpanish'])->name('spanish');
+    Route::get('/english', [CourseController::class, 'indexEnglish'])->name('english');
+    Route::get('/{slug}', [CourseController::class, 'show'])->name('show');
+    Route::prefix('{slug}/modules')->name('modules.')->group(function () {
+        Route::get('/', [ModuleController::class, 'index'])->name('index');
+        Route::get('/{module:slug}', [ModuleController::class, 'show'])->name('show');
+        Route::get('/{module:slug}/lessons', [LessonController::class, 'index'])->name('lessons.index');
+        Route::get('/{module:slug}/lesson/{lesson:slug}', [LessonController::class, 'show'])->name('lessons.show');
+    });
+});
 
 
-Route::get('/readings', [ReadingController::class, 'index'])->name('readings.index');
-Route::get('/readings/{slug}', [ReadingController::class, 'show'])->name('readings.show');
-Route::get('/readings/{slug}/part/{partSlug}', [ReadingController::class, 'showPart'])->name('readings.part.show');
+// Lecturas
+Route::prefix('readings')->name('readings.')->group(function () {
+    Route::get('/', [ReadingController::class, 'index'])->name('index');
+    Route::get('/{slug}', [ReadingController::class, 'show'])->name('show');
+    Route::get('/{slug}/part/{partSlug}', [ReadingController::class, 'showPart'])->name('part.show');
+});
 
-
-
-
+// Autores
 Route::get('/authors/{slug}', [AuthorController::class, 'show'])->name('authors.show');
