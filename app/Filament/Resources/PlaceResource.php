@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rule;
+
 
 
 class PlaceResource extends Resource
@@ -30,8 +32,16 @@ class PlaceResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
                     ->required()
-                    ->unique(Place::class, 'slug')
-                    ->maxLength(255),
+                    ->rules([
+                        function ($component) {
+                            $recordId = $component->getRecord()?->id;
+
+                            return Rule::unique(Place::class, 'slug')->ignore($recordId);
+                        },
+                    ])
+                    ->maxLength(255)
+                    ->label('Slug'),
+
                 Forms\Components\TextInput::make('logo')->url()->maxLength(255),
                 Forms\Components\TextInput::make('address')->maxLength(255),
                 Forms\Components\TextInput::make('city')->maxLength(255),
