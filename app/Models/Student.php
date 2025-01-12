@@ -21,4 +21,8 @@ class Student extends Model
         'interests' => 'array',
         'social_links' => 'json',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

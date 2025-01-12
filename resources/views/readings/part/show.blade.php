@@ -3,20 +3,20 @@
 @section('content')
     <div class="container">
         <h1>{{ $reading->title }}</h1>
-        <p>{{ ucfirst(translate('part')) }} {{ $part->part_number }}: {{ $part->title }}</p>
+        <h3>{{ $part->title }}</h3>
         <div class="content">
             {!! nl2br(e($part->content)) !!}
         </div>
 
         <hr>
 
-        <h3>{{ ucfirst(translate('other_parts')) }}</h3>
+        <h3>{{ ucfirst(translate('other_chapters')) }}</h3>
         <ul>
             @foreach ($reading->parts as $otherPart)
                 @if ($otherPart->id !== $part->id)
                     <li>
                         <a href="{{ route('readings.part.show', ['slug' => $reading->slug, 'partSlug' => $otherPart->slug]) }}">
-                            {{ ucfirst(translate('part')) }} {{ $otherPart->part_number }}: {{ $otherPart->title }}
+                            {{ ucfirst(translate('chapter')) }} {{ $otherPart->part_number }}: {{ $otherPart->title }}
                         </a>
                     </li>
                 @endif
