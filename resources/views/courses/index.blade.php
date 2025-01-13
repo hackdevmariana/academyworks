@@ -10,12 +10,14 @@
         <div class="row">
             @foreach($courses as $course)
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="{{ $course->image }}" class="card-img-top" alt="{{ $course->title }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $course->title }}</h5>
-                            <p class="card-text">{{ $course->description }}</p>
-                            <a href="{{ route('courses.show', $course->slug) }}" class="btn btn-primary">
+                    <div class="custom-card h-100">
+                        <div class="custom-image-wrapper">
+                            <img src="{{ $course->image }}" class="card-img-top" alt="{{ $course->title }}">
+                        </div>
+                        <div class="custom-card-body">
+                            <h5 class="custom-card-title">{{ $course->title }}</h5>
+                            <p class="custom-card-text">{{ $course->description }}</p>
+                            <a href="{{ route('courses.show', $course->slug) }}" class="rounded-button">
                                 {{ ucfirst(translate('view_course')) }}
                             </a>
                         </div>
