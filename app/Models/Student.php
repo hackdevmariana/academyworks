@@ -14,13 +14,14 @@ class Student extends Model
         'last_name',
         'place_of_origin',
         'interests',
-        'social_links',
+        'social_profiles', // Cambiado de social_links a social_profiles
     ];
 
     protected $casts = [
         'interests' => 'array',
-        'social_links' => 'json',
+        'social_profiles' => 'json', // Cambiado de social_links a social_profiles
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -32,9 +33,9 @@ class Student extends Model
             ->withPivot('points')
             ->withTimestamps();
     }
+
     public function getTotalPointsAttribute()
     {
         return $this->courses->sum('pivot.points');
     }
-    
 }
