@@ -78,3 +78,6 @@ Route::prefix('readings')->name('readings.')->group(function () {
 
 // Autores
 Route::get('/authors/{slug}', [AuthorController::class, 'show'])->name('authors.show');
+
+
+Route::post('/courses/{course}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');

@@ -15,57 +15,58 @@
 </div>
 
 <div class="container mt-5">
-    <div class="row mt-4">
-        <div class="col-md-8 image-course">
-            <img src="{{ $course->image_url }}" class="img-fluid" alt="{{ $course->title }}">
-        </div>
-        <div class="col-md-4">
-            <h3 class="abstract-title">{{ ucfirst(translate('abstract'))}}</h3>
-            <p class="abstract">{{ $course->abstract }}</p>
-            <h3 class="details-title">{{ ucfirst(translate('details'))}}</h3>
-            <p><strong>{{ ucfirst(translate('duration')) }}:</strong> {{ $course->duration }}</p>
-            <p><strong>{{ ucfirst(translate('level')) }}:</strong> {{ ucfirst($course->level) }}</p>
-            <p><strong>{{ ucfirst(translate('language')) }}:</strong> {{ strtoupper($course->language) }}</p>
-        </div>
-    </div>
-
-    <div class="container mt-5">
-        <h3 class="modules-title">{{ ucfirst(translate('modules')) }}</h3>
-        <div class="accordion" id="modulesAccordion">
-            @foreach ($course->modules as $module)
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-{{ $module->id }}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $module->id }}" aria-expanded="false" aria-controls="collapse-{{ $module->id }}">
-                            {{ $module->order }}. 
-                            <a href="{{ route('courses.modules.show', ['slug' => $course->slug, 'module' => $module->slug]) }}">
-                                {{ $module->title }}
-                            </a>
-                        </button>
-                    </h2>
-                    <div id="collapse-{{ $module->id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ $module->id }}" data-bs-parent="#modulesAccordion">
-                        <div class="accordion-body">
-                            <p>{{ $module->description }}</p>
-                            <h5>{{ ucfirst(translate('lessons'))}}</h5>
-                            <ul>
-                                @foreach ($module->lessons as $lesson)
-                                    <li>
-                                        {{ $lesson->order }}. 
-                                        <a href="{{ route('courses.modules.lessons.show', ['slug' => $course->slug, 'module' => $module->slug, 'lesson' => $lesson->slug]) }}">
-                                            <strong>{{ $lesson->title }}</strong>
-                                        </a>
-                                        @if ($lesson->video_url)
-                                            <br><a href="{{ $lesson->video_url }}" target="_blank">{{ ucfirst(translate('watch_video')) }}</a>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+    <h3 class="modules-title">{{ ucfirst(translate('modules')) }}</h3>
+    <div class="accordion" id="modulesAccordion">
+        @foreach ($course->modules as $module)
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-{{ $module->id }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $module->id }}" aria-expanded="false" aria-controls="collapse-{{ $module->id }}">
+                        {{ $module->order }}. 
+                        <a href="{{ route('courses.modules.show', ['slug' => $course->slug, 'module' => $module->slug]) }}">
+                            {{ $module->title }}
+                        </a>
+                    </button>
+                </h2>
+                <div id="collapse-{{ $module->id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ $module->id }}" data-bs-parent="#modulesAccordion">
+                    <div class="accordion-body">
+                        <p>{{ $module->description }}</p>
+                        <h5>{{ ucfirst(translate('lessons'))}}</h5>
+                        <ul>
+                            @foreach ($module->lessons as $lesson)
+                                <li>
+                                    {{ $lesson->order }}. 
+                                    <a href="{{ route('courses.modules.lessons.show', ['slug' => $course->slug, 'module' => $module->slug, 'lesson' => $lesson->slug]) }}">
+                                        <strong>{{ $lesson->title }}</strong>
+                                    </a>
+                                    @if ($lesson->video_url)
+                                        <br><a href="{{ $lesson->video_url }}" target="_blank">{{ ucfirst(translate('watch_video')) }}</a>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
+    </div>
+
+    {{-- Botón de inscripción --}}
+    <div class="text-center mt-4">
+        @auth
+            <form action="{{ route('courses.enroll', $course->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary">
+                    {{ ucfirst(translate('enroll_in_course')) }}
+                </button>
+            </form>
+        @else
+            <a href="{{ route('register') }}" class="btn btn-primary">
+                {{ ucfirst(translate('register_to_enroll')) }}
+            </a>
+        @endauth
     </div>
 </div>
+
 
 <style>
     .event-banner-wrapper {

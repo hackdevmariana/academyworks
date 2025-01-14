@@ -36,4 +36,20 @@ class CourseController extends Controller
         $course = Course::where('slug', $slug)->firstOrFail();
         return view('courses.show', ['course' => $course]);
     }
+
+    public function enroll(Course $course)
+    {
+        $user = auth()->user();
+
+        // Verifica si ya está inscrito
+        if ($course->students()->where('user_id', $user->id)->exists()) {
+            return redirect()->back()->with('status', translate('already_enrolled'));
+        }
+
+        // Inscribe al estudiante
+        $course->students()->attach($user->id);
+
+        return redirect()->back()->with('status', translate('enrollment_successful'));
+    }
+
 }
