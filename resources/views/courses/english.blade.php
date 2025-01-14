@@ -21,7 +21,7 @@
                         <div class="course-card-text">
                         <h5 style="color: black; margin-top: 1rem;">{{ $course->title }}</h5>
                         <p>{{ $course->abstract }}</p>
-                        <a href="{{ $language === 'es' ? url('/curso/' . $course->slug) : url('/course/' . $course->slug) }}" 
+                        <a href="{{ $language === 'es' ? url('/course/' . $course->slug) : url('/course/' . $course->slug) }}" 
                            class="btn btn-primary">
                             {{ $language === 'es' ? 'Ver curso' : 'View course' }}
                         </a>
