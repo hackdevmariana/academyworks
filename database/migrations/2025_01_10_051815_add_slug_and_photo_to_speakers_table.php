@@ -7,16 +7,34 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('speakers', function (Blueprint $table) {
-            $table->string('slug')->unique();
-            $table->string('photo')->nullable();
-            $table->string('photo_url')->nullable();
+            if (!Schema::hasColumn('speakers', 'slug')) {
+                $table->string('slug')->unique();
+            }
+
+            if (!Schema::hasColumn('speakers', 'photo')) {
+                $table->string('photo')->nullable();
+            }
+
+            if (!Schema::hasColumn('speakers', 'photo_url')) {
+                $table->string('photo_url')->nullable();
+            }
         });
     }
 
     public function down()
     {
         Schema::table('speakers', function (Blueprint $table) {
-            $table->dropColumn(['slug', 'photo', 'photo_url']);
+            if (Schema::hasColumn('speakers', 'slug')) {
+                $table->dropColumn('slug');
+            }
+
+            if (Schema::hasColumn('speakers', 'photo')) {
+                $table->dropColumn('photo');
+            }
+
+            if (Schema::hasColumn('speakers', 'photo_url')) {
+                $table->dropColumn('photo_url');
+            }
         });
     }
 };

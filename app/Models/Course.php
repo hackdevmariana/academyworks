@@ -27,7 +27,13 @@ class Course extends Model
     {
         return $this->hasMany(Module::class);
     }
-    
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'students_courses')
+            ->withPivot('points')
+            ->withTimestamps();
+    }
+
 
 }
 

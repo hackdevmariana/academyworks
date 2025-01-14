@@ -23,13 +23,14 @@ class Speaker extends Model
     protected static function boot()
     {
         parent::boot();
-
+    
         static::saving(function ($model) {
             if (empty($model->slug)) {
-                $model->slug = Str::slug("{$model->name} {$model->surname}");
+                $model->slug = Str::slug(trim($model->name) . ' ' . trim($model->surname));
             }
         });
     }
+    
 
     public function getDisplayNameAttribute(): string
     {
